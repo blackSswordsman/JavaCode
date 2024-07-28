@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: initial_migration
+      author: blackSswordsman
+      changes:
+        - createTable:
+            tableName: wallet
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_wallet_id
+                    nullable: false
+              - column:
+                  name: balance
+                  type: numeric(1000,2)
+                  constraints:
+                    unique: false
+                    nullable: false
+        - createTable:
+            tableName: transaction
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_transaction_id
+                    nullable: false
+              - column:
+                  name: wallet_id
+                  type: uuid
+                  constraints:
+                    unique: false
+                    nullable: false
+                    foreignKeyName: fk_transaction_to_wallet_id
+                    references: wallet(id)
+              - column:
+                  name: operation_type
+                  type: varchar(20)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: sum
+                  type: numeric(1000,2)
+                  constraints:
+                    unique: false
+                    nullable: false
+
