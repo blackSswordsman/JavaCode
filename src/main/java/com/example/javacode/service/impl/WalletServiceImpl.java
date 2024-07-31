@@ -26,7 +26,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet getWallet(UUID id) {
-        return walletRepository.findById(id).orElseThrow(WalletNotFoundException::new);
+        return walletRepository.findByIdWithPessimisticLock(id).orElseThrow(WalletNotFoundException::new);
     }
 
     @Override
