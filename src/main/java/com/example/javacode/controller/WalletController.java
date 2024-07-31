@@ -19,8 +19,11 @@ public class WalletController {
     private final WalletService walletService;
     @PostMapping("/wallet")
     public WalletResponse changeWalletBalance(@Valid @RequestBody ChangeWalletBalanceRequest changeWalletBalanceRequest) {
-        ChangeWalletBalanceRecord record = new ChangeWalletBalanceRecord(changeWalletBalanceRequest.getWalletId(),
-                changeWalletBalanceRequest.getOperationType(),changeWalletBalanceRequest.getSum());
+        ChangeWalletBalanceRecord record =  ChangeWalletBalanceRecord.builder()
+                .walletId(changeWalletBalanceRequest.getWalletId())
+                .operationType(changeWalletBalanceRequest.getOperationType())
+                .sum(changeWalletBalanceRequest.getSum())
+                .build();
         Wallet wallet = walletService.changeBalance(record);
         return getWalletResponse(wallet);
     }
